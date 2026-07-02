@@ -144,7 +144,11 @@ export function setupShaderCanvas(video, container) {
   }
 
   video.addEventListener('loadedmetadata', resize)
-  window.addEventListener('resize', resize)
+  // ResizeObserver (rather than window's `resize` event) ties the canvas's
+  // internal resolution directly to the container's actual box size, so it
+  // can't fall out of sync during the transient viewport thrashing mobile
+  // browsers do mid-rotation (toolbar show/hide, delayed `resize` firing).
+  new ResizeObserver(resize).observe(container)
   resize()
 
   function draw() {
