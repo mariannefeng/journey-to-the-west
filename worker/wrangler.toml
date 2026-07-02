@@ -1,0 +1,15 @@
+name = "journey-to-the-west-videos"
+main = "index.js"
+compatibility_date = "2026-07-02"
+
+[[r2_buckets]]
+binding = "VIDEOS"
+bucket_name = "journey-to-the-west"
+
+[vars]
+ALLOWED_ORIGINS = "http://localhost:5173,https://journeytothewest.tv,https://www.journeytothewest.tv"
+
+
+[[routes]]
+pattern = "videos.journeytothewest.tv"
+custom_domain = true
