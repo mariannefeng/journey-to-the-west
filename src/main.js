@@ -6,7 +6,7 @@ const STREAM_BASE_URL = import.meta.env.VITE_STREAM_BASE_URL
 
 document.querySelector('#app').innerHTML = `
 <div id="tv">
-  <video id="player" autoplay disablepictureinpicture disableremoteplayback crossorigin="anonymous"></video>
+  <video id="player" autoplay disablepictureinpicture disableremoteplayback playsinline webkit-playsinline crossorigin="anonymous"></video>
   <p id="unmute-hint" hidden>No sound - click anywhere to enable volume</p>
 </div>
 `
