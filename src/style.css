@@ -54,35 +54,6 @@ body {
   margin: 0;
 }
 
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
-}
-
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
-  margin: 0;
-}
-
 #tv {
   position: fixed;
   inset: 0;
@@ -113,10 +84,17 @@ p {
 #now-playing {
   position: absolute;
   left: 24px;
-  bottom: 24px;
+  top: 24px;
   margin: 0;
   color: #fff;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+#now-playing.visible {
+  opacity: 1;
 }
 
 #unmute-hint {

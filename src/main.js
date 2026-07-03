@@ -8,12 +8,14 @@ document.querySelector('#app').innerHTML = `
 <div id="tv">
   <video id="player" autoplay disablepictureinpicture disableremoteplayback playsinline webkit-playsinline crossorigin="anonymous"></video>
   <p id="unmute-hint" hidden>No sound - click anywhere to enable volume</p>
+  <p id="now-playing"></p>
 </div>
 `
 
 const video = document.querySelector('#player')
 const tv = document.querySelector('#tv')
 const unmuteHint = document.querySelector('#unmute-hint')
+const nowPlaying = document.querySelector('#now-playing')
 
 setupShaderCanvas(video, tv)
 
@@ -53,10 +55,19 @@ function attemptPlay() {
   })
 }
 
+let hideNowPlayingTimer = null
+function showNowPlaying() {
+  nowPlaying.classList.add('visible')
+  clearTimeout(hideNowPlayingTimer)
+  hideNowPlayingTimer = setTimeout(() => nowPlaying.classList.remove('visible'), 5000)
+}
+
 function playEpisode(i, startAt = 0) {
   index = i
   const episode = playlist[i]
   video.src = `${STREAM_BASE_URL}/${encodeURIComponent(episode.filename)}`
+  nowPlaying.textContent = `Ep. ${episode.episode} — ${episode.title} / ${episode.title_ch}`
+  showNowPlaying()
   if (startAt > 0) {
     video.addEventListener('loadedmetadata', () => {
       video.currentTime = startAt
@@ -67,11 +78,15 @@ function playEpisode(i, startAt = 0) {
   }
 }
 
-document.addEventListener('click', () => {
-  video.muted = false
-  tv.style.cursor = ''
-  unmuteHint.hidden = true
-}, { once: true })
+tv.addEventListener('click', () => {
+  video.muted = !video.muted
+  if (!video.muted) {
+    tv.style.cursor = ''
+    unmuteHint.hidden = true
+  }
+  showNowPlaying()
+})
+tv.addEventListener('mousemove', showNowPlaying)
 
 // Channel-style playback: no controls, no seeking/pausing, just play
 // through the playlist in order and loop back to episode 1 at the end.
