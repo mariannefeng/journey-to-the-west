@@ -84,7 +84,7 @@ body {
 #now-playing {
   position: absolute;
   left: 24px;
-  top: 24px;
+  bottom: 24px;
   margin: 0;
   color: #fff;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
